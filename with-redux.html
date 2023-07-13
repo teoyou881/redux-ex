@@ -35,19 +35,25 @@
             if (state === undefined) {
                 return { color: 'yellow' };
             }
+            let newState;
+            if (action.type === 'CHANGE_COLOR') {
+                newState = Object.assign({}, state, { color: 'red' });
+                // state.color = 'red';
+            }
+            console.log(newState.color);
+            return newState;
         }
         let store = Redux.createStore(reducer);
         let state = store.getState();
-        console.log(store.getState());
         function red() {
 
             document.querySelector('#red').innerHTML = `
                     <div class="container" id="component_red" style="background-color:${state.color}">
                         <h1>red</h1>
-                        <input type="button" value="fire" onclick="
-                        document.querySelector('#component_red').style.backgroundColor='red';
-                        document.querySelector('#component_blue').style.backgroundColor='red';
-                        document.querySelector('#component_green').style.backgroundColor='red';"
+                        <input type="button" value="fire" 
+                        onclick="
+                        store.dispatch({type:'CHANGE_COLOR', color:'red'});
+                        "
                     </div>
                 `;
         }
