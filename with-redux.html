@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.2.1/redux.min.js"
+        integrity="sha512-1/8Tj23BRrWnKZXeBruk6wTnsMJbi/lJsk9bsRgVwb6j5q39n0A00gFjbCTaDo5l5XrPVv4DZXftrJExhRF/Ug=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>with-redux</title>
+</head>
+<style>
+    .container {
+        border: 5px solid black;
+        padding: 10px;
+        margin: 10px;
+    }
+</style>
+
+<body>
+
+    <div id="red"></div>
+    <div id="green"></div>
+    <div id="blue"></div>
+    <script>
+        /* store를 만들면 내부적으로 state의 값이 생기고,
+        state 의 값을 가져올 때는 getState()를 사용해야 한다.
+        그리고 reducer라고 하는 것을 통해서 state의 값을 만들어줘야 한다.
+        reducer의 기존 state의 값이 undefined라면, 
+        그것은 초기화를 위해서 최초로 실행되는 reducer의 호출이기 때문에 
+        우리가 원하는 초기값을 리턴해주면 리덕스의 store에는 그 초기값이 지정이 된다.
+        */
+
+        function reducer(state, action) {
+            if (state === undefined) {
+                return { color: 'yellow' };
+            }
+        }
+        let store = Redux.createStore(reducer);
+        let state = store.getState();
+        console.log(store.getState());
+        function red() {
+
+            document.querySelector('#red').innerHTML = `
+                    <div class="container" id="component_red" style="background-color:${state.color}">
+                        <h1>red</h1>
+                        <input type="button" value="fire" onclick="
+                        document.querySelector('#component_red').style.backgroundColor='red';
+                        document.querySelector('#component_blue').style.backgroundColor='red';
+                        document.querySelector('#component_green').style.backgroundColor='red';"
+                    </div>
+                `;
+        }
+
+        function green() {
+            document.querySelector('#green').innerHTML = `
+                    <div class="container" id="component_green" style="background-color:${state.color}">
+                        <h1>green</h1>
+                        <input type="button" value="fire" onclick="
+                        document.querySelector('#component_green').style.backgroundColor='green';
+                        document.querySelector('#component_blue').style.backgroundColor='green';
+                        document.querySelector('#component_red').style.backgroundColor='green';"
+                    </div>
+                `;
+        }
+
+        function blue() {
+            document.querySelector('#blue').innerHTML = `
+                    <div class="container" id="component_blue" style="background-color:${state.color}">
+                        <h1>blue</h1>
+                        <input type="button" value="fire" onclick="
+                        document.querySelector('#component_blue').style.backgroundColor='blue';
+                        document.querySelector('#component_green').style.backgroundColor='blue';
+                        document.querySelector('#component_red').style.backgroundColor='blue';"
+                    </div>
+                `;
+        }
+
+        red();
+        green();
+        blue();
+    </script>
+
+</body>
+
+</html>
